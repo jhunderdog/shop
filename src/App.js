@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Nav,
@@ -10,8 +10,11 @@ import {
 } from "react-bootstrap";
 import logo from "./logo.svg";
 import "./App.css";
+import data from "./data.js";
 
 function App() {
+  let [shoes, shoes변경] = useState(data);
+
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -47,34 +50,28 @@ function App() {
       </Jumbotron>
       <div className="container">
         <div className="row">
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>설명 & 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes2.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>설명 & 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes3.jpg"
-              width="100%"
-            />
-            <h4>상품명</h4>
-            <p>설명 & 가격</p>
-          </div>
+          {shoes.map((item, j) => {
+            return <Item shoes={shoes[j]} j={j} />;
+          })}
         </div>
       </div>
     </div>
   );
 }
 
+function Item(props) {
+  return (
+    <div className="col-md-4">
+      <img
+        src={
+          "https://codingapple1.github.io/shop/shoes" + (props.j + 1) + ".jpg"
+        }
+        width="100%"
+      />
+      <h4>{props.shoes.title}</h4>
+      <h4>{props.shoes.price}</h4>
+      <h4>{props.shoes.content}</h4>
+    </div>
+  );
+}
 export default App;
