@@ -65,8 +65,8 @@ function App() {
           </div>
         </Route>
 
-        <Route path="/detail">
-          <Detail />
+        <Route path="/detail/:id">
+          <Detail shoes={shoes} />
         </Route>
         <Route path="/:id">
           <div>아무거나적었을때 이거 보여주셈</div>
