@@ -12,6 +12,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import data from "./data.js";
 import Detail from "./Detail.js";
+import axios from "./axios";
 import { Link, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -63,6 +64,24 @@ function App() {
               })}
             </div>
           </div>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              axios.post("url", { id: "codingapple", pw: 1234 });
+              axios
+                .get("https://codingapple1.github.io/shop/data2.json")
+                .then((result) => {
+                  console.log(result.data);
+                  let newArray = [...shoes, result.data];
+                  shoes변경(newArray);
+                })
+                .catch(() => {
+                  console.log("실패했어요");
+                });
+            }}
+          >
+            더 보기
+          </button>
         </Route>
 
         <Route path="/detail/:id">
