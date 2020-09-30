@@ -19,11 +19,26 @@ function Cart(props) {
 
           {props.state.map((item, key) => {
             return (
-              <tr>
+              <tr key={key}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
-                <td>Table cell</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      props.dispatch({ type: "수량증가" });
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => {
+                      props.dispatch({ type: "수량감소" });
+                    }}
+                  >
+                    -
+                  </button>
+                </td>
               </tr>
             );
           })}
