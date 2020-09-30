@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import "./Detail.scss";
+import { 재고context } from "./App";
 
 let 박스 = styled.div`
   padding: 20px;
@@ -12,6 +13,7 @@ let 제목 = styled.h4`
 `;
 
 function Detail(props) {
+  let 재고 = useContext(재고context);
   let [alert, alert변경] = useState(true);
   useEffect(() => {
     let 타이머 = setTimeout(() => {
@@ -58,7 +60,16 @@ function Detail(props) {
           <h4 className="pt-5">{selected_item.title}</h4>
           <p>{selected_item.content}</p>
           <p>{selected_item.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <p>{재고}</p>
+          <Info 재고={props.재고}></Info>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              props.재고변경([9, 10, 11]);
+            }}
+          >
+            주문하기
+          </button>
           <button
             className="btn btn-danger"
             onClick={() => {
@@ -73,4 +84,7 @@ function Detail(props) {
   );
 }
 
+function Info(props) {
+  return <p>재고:{props.재고[0]}</p>;
+}
 export default Detail;

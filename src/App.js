@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Navbar,
   Nav,
@@ -12,12 +12,14 @@ import logo from "./logo.svg";
 import "./App.css";
 import data from "./data.js";
 import Detail from "./Detail.js";
-import axios from "./axios";
+import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
+
+export let 재고context = React.createContext();
 
 function App() {
   let [shoes, shoes변경] = useState(data);
-
+  let [재고, 재고변경] = useState([10, 11, 12]);
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -58,11 +60,13 @@ function App() {
             </p>
           </Jumbotron>
           <div className="container">
-            <div className="row">
-              {shoes.map((item, j) => {
-                return <Item shoes={shoes[j]} j={j} />;
-              })}
-            </div>
+            <재고context.Provider value={재고}>
+              <div className="row">
+                {shoes.map((item, j) => {
+                  return <Item shoes={shoes[j]} j={j} />;
+                })}
+              </div>
+            </재고context.Provider>
           </div>
           <button
             className="btn btn-primary"
@@ -72,7 +76,8 @@ function App() {
                 .get("https://codingapple1.github.io/shop/data2.json")
                 .then((result) => {
                   console.log(result.data);
-                  let newArray = [...shoes, result.data];
+                  let newArray = [...shoes, ...result.data];
+                  console.log(newArray);
                   shoes변경(newArray);
                 })
                 .catch(() => {
@@ -85,7 +90,9 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes} />
+          <재고context.Provider value={재고}>
+            <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
+          </재고context.Provider>
         </Route>
         <Route path="/:id">
           <div>아무거나적었을때 이거 보여주셈</div>
@@ -96,6 +103,7 @@ function App() {
 }
 
 function Item(props) {
+  let 재고 = useContext(재고context);
   return (
     <div className="col-md-4">
       <img
@@ -107,7 +115,12 @@ function Item(props) {
       <h4>{props.shoes.title}</h4>
       <h4>{props.shoes.price}</h4>
       <h4>{props.shoes.content}</h4>
+      <Test></Test>
     </div>
   );
+}
+function Test() {
+  let 재고 = useContext(재고context);
+  return <p>{재고[0]}</p>;
 }
 export default App;
