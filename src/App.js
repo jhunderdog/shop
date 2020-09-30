@@ -15,6 +15,7 @@ import Detail from "./Detail.js";
 import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
 
+import Cart from "./Cart";
 export let 재고context = React.createContext();
 
 function App() {
@@ -93,6 +94,9 @@ function App() {
           <재고context.Provider value={재고}>
             <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
           </재고context.Provider>
+        </Route>
+        <Route path="/cart">
+          <Cart></Cart>
         </Route>
         <Route path="/:id">
           <div>아무거나적었을때 이거 보여주셈</div>

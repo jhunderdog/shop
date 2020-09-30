@@ -4,11 +4,22 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+let store = createStore(() => {
+  return [
+    { id: 0, name: "멋진신발", quantity: 2 },
+    { id: 1, name: "구린신발", quantity: 10 },
+  ];
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
