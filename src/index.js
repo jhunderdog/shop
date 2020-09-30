@@ -20,6 +20,11 @@ let 초기값 = [
   { id: 1, name: "구린신발", quantity: 10 },
 ];
 function reducer(state = 초기값, 액션) {
+  if (액션.type === "항목추가") {
+    let copy = [...state];
+    copy.push(액션.payload);
+    return copy;
+  }
   if (액션.type === "수량증가") {
     let copy = [...state];
     copy[0].quantity++;
