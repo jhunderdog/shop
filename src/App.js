@@ -16,6 +16,7 @@ import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
 
 import Cart from "./Cart";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export let 재고context = React.createContext();
 
 function App() {
@@ -108,8 +109,14 @@ function App() {
 
 function Item(props) {
   let 재고 = useContext(재고context);
+  let history = useHistory();
   return (
-    <div className="col-md-4">
+    <div
+      className="col-md-4"
+      onClick={() => {
+        history.push("/detail/" + props.shoes.id);
+      }}
+    >
       <img
         src={
           "https://codingapple1.github.io/shop/shoes" + (props.j + 1) + ".jpg"
