@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, lazy, Suspense } from "react";
 import {
   Navbar,
   Nav,
@@ -11,13 +11,14 @@ import {
 import logo from "./logo.svg";
 import "./App.css";
 import data from "./data.js";
-import Detail from "./Detail.js";
+// import Detail from "./Detail.js";
 import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
 
 import Cart from "./Cart";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export let 재고context = React.createContext();
+let Detail = lazy(() => import("./Detail.js"));
 
 function App() {
   let [shoes, shoes변경] = useState(data);
@@ -93,7 +94,9 @@ function App() {
 
         <Route path="/detail/:id">
           <재고context.Provider value={재고}>
-            <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
+            <Suspense fallback={<div>loading</div>}>
+              <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
+            </Suspense>
           </재고context.Provider>
         </Route>
         <Route path="/cart">
